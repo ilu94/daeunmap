@@ -9,12 +9,12 @@ const options = {
 
 const sign = (userId) => {
     return jwt.sign(userId, secretKey, options, function(err, token) {
-        
+
     });
 };
 
 const verify = (token) => {
-    try {
+    try {ks
         if(!token)
             throw "Access Denied";
         return jwt.verify(token, configs.jwt);
