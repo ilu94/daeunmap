@@ -1,0 +1,7 @@
+{
+    "host":"localhost",
+    "user": "root",
+    "password":"hg5742695",
+    "database": "loc",
+    "multipleStatements": "true"
+}
