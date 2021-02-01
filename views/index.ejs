@@ -1,9 +1,16 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title> 카카오 지도 시작하기</title>
+    <title> 카카오 지도 시작하기 </title>
 </head>
 <body>  
+    
+    <script>
+        var token = `<%-JSON.stringify(token)%>`
+        localStorage.setItem("token",token )
+        
+        //localStorage.setItem("token", $(token))
+    </script>
     <input type = "text" id = "searchLoc">
     <button onclick="searchLocation();"> 검색 </button>
     <div id="map" style="width: 500px; height: 400;"></div>
@@ -57,15 +64,20 @@
                 map: map,
                 position: new daum.maps.LatLng(place.y, place.x) 
             });
-
+            console.log(place.x + " " +place.y);
             // 마커에 클릭이벤트를 등록합니다
             daum.maps.event.addListener(marker, 'click', function() {
                 // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name 
+                + '<button onclick="addFavorite()">즐겨찾기 추가</button>' + '</div>');
+                
                 infowindow.open(map, marker);
             });
         }
-
+        
+        function addFavorite(marker) {
+            console.log(marker.position)
+        }
     </script>
 
 

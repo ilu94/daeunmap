@@ -1,4 +1,4 @@
-//const mysql = require("./mysql.json");
+const mysql = require("./mysql.json");
 
 module.exports = {
     mysql,

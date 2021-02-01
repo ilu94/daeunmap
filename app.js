@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const indexRouter = require("./src/routes");
+
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -10,6 +10,9 @@ const flash = require('connect-flash');
 //const webSocket = require('./socket');
 //const configs = require("./configs");
 const session = require("express-session");
+
+const indexRouter = require("./src/routes");
+const authRouter = require("./src/routes/auth");
 
 
 require('dotenv').config();
@@ -42,6 +45,7 @@ app.use(flash());
 
 //api router
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {

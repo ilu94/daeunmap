@@ -3,18 +3,13 @@ const jwt = require("jsonwebtoken");
 const configs = require("../configs/index");
 const secretKey = "daeunkey";
 
-const options = {
-    expiresIn:'7d', issuer:"daeuntest", subject: 'userinfo'
-}
 
 const sign = (userId) => {
-    return jwt.sign(userId, secretKey, options, function(err, token) {
-
-    });
+    return jwt.sign({userId: userId}, secretKey);
 };
 
 const verify = (token) => {
-    try {ks
+    try {
         if(!token)
             throw "Access Denied";
         return jwt.verify(token, configs.jwt);

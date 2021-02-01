@@ -1,37 +1,27 @@
-const { compare, hash } = require("../helpers/bcrypt");
-const { sign, verify } = require("../helpers/jwt");
-const { query, escapeId, escape } = require("../helpers/");
+const express = require("express");
+const app = require("../../app");
+const userServices = require('../services/auth')
+const router = express.Router();
+const checkAuth = require('../middleware/check-auth');
 
-const message = require('../../libs/message');
-
-const signIn = async ({username, password}) => {
-    if(!username || !password) {
-        throw message.wrongInput;
+router.post('/signup', async(req, res) => {
+    try{
+        res.json(await userServices.signUp(req.body));
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
     }
+});
 
-    const user = await query(
-        `select * from loc.Users where username=? and password=?`,
-        [username, password],
-        true
-    )
-
-    if(!user) {
-        throw message.checkUsername;
-    } else if (!compare(user.password, password)) {
-        throw message.checkPassword;
+router.post('/signin', async (req, res) => {
+    try {
+        const token = await userServices.signIn(req.body);
+        if(checkAuth) {
+            res.render('index', token);
+        }
+    }catch (error) {
+        res.status(500).json(error);
     }
+});
 
-    const token = sign({ userId: user.username });
-
-    console.log(token)
-
-    return {
-        token,
-        user,
-    }
-}
-
-module.exports = {
-    signIn,
-    
-}
+module.exports = router;
